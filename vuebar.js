@@ -602,6 +602,8 @@
         function destroyScrollbar(el, options){
             var options = options ? options : {};
             var state = getState(el);
+			var scrollTrack;
+
             if (!state) return;
 
             // clear events
@@ -642,8 +644,16 @@
 
             // clear dragger
             state.dragger.removeChild(state.dragger.firstChild);
-            state.el1.removeChild(state.dragger);
 
+            if (state.config.useScrollTrack) {
+                scrollTrack = state.dragger.parentNode;
+                scrollTrack.removeChild(scrollTrack.firstChild);
+                state.el1.removeChild(scrollTrack);
+            } else {
+                state.el1.removeChild(state.dragger);
+            }
+
+           
             // clear timeouts that may be still running
             state.scrollingPhantomClassTimeout ?
                 clearTimeout(state.scrollingPhantomClassTimeout) : null;
