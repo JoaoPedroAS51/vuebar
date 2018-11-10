@@ -215,12 +215,23 @@
         function updateDragger(el, options){
             var options = options ? options : {};
             var state = getState(el);
+			var scrollTrack;
 
             // setting dragger styles
             state.dragger.style.height = parseInt( Math.round( state.barHeight)  ) + 'px';
             state.dragger.style.top = parseInt( Math.round( state.barTop ) ) + 'px';
             //state.dragger.style.height = Math.ceil( state.barHeight ) + 'px';
             //state.dragger.style.top = Math.ceil( state.barTop ) + 'px';
+
+            if (state.config.useScrollTrack) {
+                scrollTrack = state.dragger.parentNode;
+
+                if (parseInt(Math.round(state.barHeight)) > 0) {
+                    scrollTrack.style.height = 100 + '%';
+                } else {
+                    scrollTrack.style.height = 0;
+                }
+            }
 
             // scrollbar visible / invisible classes
             if (state.draggerEnabled && (state.visibleArea<1)) {
